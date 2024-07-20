@@ -5,9 +5,11 @@ class DepartmentsController < ApplicationController
     render({ :template => "departments/index" })
   end
 
+
   def show
     the_id = params.fetch("path_id")
-    @department = Department.where({:id => the_id })
+    matching_departments = Department.where({ :id => the_id })
+    @department = matching_departments.at(0)
 
     render({ :template => "departments/show" })
   end
