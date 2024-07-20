@@ -7,17 +7,18 @@ class StudentsController < ApplicationController
 
   def show
     the_id = params.fetch("path_id")
-    @student = Student.where({:id => the_id }).at(0)
+    @student = Student.where({ :id => the_id }).at(0)
 
     render({ :template => "students/show" })
   end
 
   def create
+    Rails.logger.debug("Params: #{params.inspect}")
     @student = Student.new
     @student.first_name = params.fetch("query_first_name")
     @student.last_name = params.fetch("query_last_name")
     @student.email = params.fetch("query_email")
-
+  
     if @student.valid?
       @student.save
       redirect_to("/students", { :notice => "Student created successfully." })
@@ -36,7 +37,7 @@ class StudentsController < ApplicationController
 
     if @student.valid?
       @student.save
-      redirect_to("/students/#{@student.id}", { :notice => "Student updated successfully."} )
+      redirect_to("/students/#{@student.id}", { :notice => "Student updated successfully." })
     else
       redirect_to("/students/#{@student.id}", { :alert => "Student failed to update successfully." })
     end
@@ -48,6 +49,6 @@ class StudentsController < ApplicationController
 
     @student.destroy
 
-    redirect_to("/students", { :notice => "Student deleted successfully."} )
+    redirect_to("/students", { :notice => "Student deleted successfully." })
   end
 end
