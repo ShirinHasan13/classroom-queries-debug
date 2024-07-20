@@ -5,12 +5,14 @@ class CoursesController < ApplicationController
     render({ :template => "courses/index" })
   end
 
-  def show
+ def show
     the_id = params.fetch("path_id")
     @course = Course.where({:id => the_id }).at(0)
 
     render({ :template => "courses/show" })
   end
+
+end
 
   def create
     puts params.inspect # Debugging statement
@@ -26,7 +28,6 @@ class CoursesController < ApplicationController
     else
       redirect_to("/courses", { :notice => "Course failed to create successfully." })
     end
-  end
 end
 
   def update
